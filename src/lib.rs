@@ -2,6 +2,7 @@
 mod d_01;
 mod d_02;
 mod d_03;
+mod d_04;
 
 
 pub fn add(left: usize, right: usize) -> usize {
