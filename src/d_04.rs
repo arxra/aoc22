@@ -54,12 +54,10 @@ mod tests {
     }
     #[test]
     fn p1() {
-        let result = solve_p1("input/04.txt");
-        println!("p1: {result}");
+        dbg!(solve_p1("input/04.txt"));
     }
     #[test]
     fn p2() {
-        let result = solve_p2("input/04.txt");
-        println!("p2: {result}");
+        dbg!(solve_p2("input/04.txt"));
     }
 }
