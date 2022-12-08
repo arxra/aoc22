@@ -27,10 +27,9 @@ impl Path {
     fn sum_size(&self, max: usize) -> usize {
         let mut s = 0;
         s += self.folders.iter().map(|a| a.sum_size(max)).sum::<usize>();
-        if let Some(t) = self.tot_size {
-            if t < max {
-                s += t
-            }
+        match self.tot_size {
+            Some(t) if t < max => s += t,
+            _ => (),
         }
         s
     }
@@ -81,9 +80,8 @@ fn solve_p2(file_name: &str) -> usize {
         &mut std::fs::read_to_string(file_name).unwrap().lines(),
         &mut sizes,
     );
-    sizes.sort();
 
-    dbg!(&sizes);
+    sizes.sort();
 
     let total_space = 70000000;
     let required_size = 30000000;
