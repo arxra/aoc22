@@ -8,6 +8,7 @@ mod d_05;
 mod d_06;
 mod d_07;
 mod d_08;
+mod d_09;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
