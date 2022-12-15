@@ -1,5 +1,6 @@
 use std::{os::unix::prelude::FileExt, str::Lines};
 
+use itertools::FoldWhile::{Continue, Done};
 use itertools::Itertools;
 
 type Input = Vec<Vec<Tree>>;
@@ -63,20 +64,55 @@ fn solve_p1(file_name: &str) -> usize {
 
 fn solve_p2(file_name: &str) -> usize {
     let mut top_scene = 0;
-    // let mut input = get_input(file_name);
-    // let x = input.len();
-    // let y = input[0].len();
-    //
-    // (0..y).cartesian_product(0..x).for_each(|(y, x)| {
-    //     let mut temp= 0;
-    //     let up = for yy in (y..0){
-    //         if input[yy][x].value <input[y][x].value {
-    //             temp +=1;
-    //         }else{
-    //             break;
-    //         }
-    //     }
-    // });
+    let mut input = get_input(file_name);
+    let xlen = input.len();
+    let ylen = input[0].len();
+
+    // we don't need to consider edges as theri scenic product is always 0.
+    (1..ylen - 1)
+        .cartesian_product(1..xlen - 1)
+        .for_each(|(x, y)| {
+            let mut res = (0..x)
+                .rev()
+                .fold_while(0, |acc, xx| {
+                    if input[xx][y].value < input[x][y].value {
+                        Continue(acc + 1)
+                    } else {
+                        Done(acc + 1)
+                    }
+                })
+                .into_inner()
+                * (x + 1..xlen)
+                    .fold_while(0, |acc, xx| {
+                        if input[xx][y].value < input[x][y].value {
+                            Continue(acc + 1)
+                        } else {
+                            Done(acc + 1)
+                        }
+                    })
+                    .into_inner()
+                * (0..y)
+                    .rev()
+                    .fold_while(0, |acc, yy| {
+                        if input[x][yy].value < input[x][y].value {
+                            Continue(acc + 1)
+                        } else {
+                            Done(acc + 1)
+                        }
+                    })
+                    .into_inner()
+                * (y + 1..ylen)
+                    .fold_while(0, |acc, yy| {
+                        if input[x][yy].value < input[x][y].value {
+                            Continue(acc + 1)
+                        } else {
+                            Done(acc + 1)
+                        }
+                    })
+                    .into_inner();
+
+            top_scene = top_scene.max(res);
+        });
     top_scene
 }
 
@@ -92,17 +128,16 @@ mod tests {
     }
     #[test]
     fn p2_exp() {
-        unimplemented!();
-        let expected = 24933642;
+        let expected = 8;
         let result = solve_p2("small/08.txt");
+        assert_eq!(result, expected);
     }
     #[test]
     fn p1() {
-        dbg!(solve_p1("input/08.txt"));
-        panic!();
+        assert_eq!(solve_p1("input/08.txt"), 1827);
     }
     #[test]
     fn p2() {
-        dbg!(solve_p2("input/08.txt"));
+        assert_eq!(solve_p2("input/08.txt"), 335580);
     }
 }
