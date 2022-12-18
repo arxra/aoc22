@@ -88,7 +88,7 @@ fn solve(file_name: &str, size: usize) -> usize {
     let mut knots = vec![Knot::new(0, 0); size];
 
     travels.into_iter().for_each(|(dir, steps)| {
-        for _ in (0..steps) {
+        for _ in 0..steps {
             match dir {
                 'R' => knots[0].x += 1,
                 'U' => knots[0].y += 1,
@@ -96,7 +96,7 @@ fn solve(file_name: &str, size: usize) -> usize {
                 'D' => knots[0].y -= 1,
                 _ => unreachable!(),
             };
-            for i in (1..size) {
+            for i in 1..size {
                 let previous = knots[i - 1];
                 knots[i].update(&previous);
             }

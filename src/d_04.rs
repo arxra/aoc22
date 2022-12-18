@@ -1,4 +1,4 @@
-use itertools::Itertools;
+
 
 fn solve_p1(file_name: &str) -> usize {
     std::fs::read_to_string(file_name)
@@ -12,7 +12,7 @@ fn solve_p1(file_name: &str) -> usize {
         .filter(|i| match (i[0], i[1], i[2], i[3]) {
             (a, b, c, d) if a >= c && b <= d => true,
             (a, b, c, d) if c >= a && d <= b => true,
-            a => false,
+            _a => false,
         })
         .count()
 }
@@ -27,11 +27,11 @@ fn solve_p2(file_name: &str) -> usize {
                 .collect::<Vec<usize>>()
         })
         .filter(|i| match (i[0], i[1], i[2], i[3]) {
-            (a, b, c, d) if a >= c && a <= d => true,
-            (a, b, c, d) if b >= c && b <= d => true,
-            (a, b, c, d) if c >= a && c <= b => true,
-            (a, b, c, d) if d >= a && d <= b => true,
-            a => false,
+            (a, _b, c, d) if a >= c && a <= d => true,
+            (_a, b, c, d) if b >= c && b <= d => true,
+            (a, b, c, _d) if c >= a && c <= b => true,
+            (a, b, _c, d) if d >= a && d <= b => true,
+            _a => false,
         })
         .count()
 }

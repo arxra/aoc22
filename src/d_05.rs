@@ -1,4 +1,4 @@
-use itertools::Itertools;
+
 
 fn solve(file_name: &str, p1: bool) -> String {
     let mut stacks: Vec<Vec<char>> = vec![Vec::new(); 10];
@@ -11,7 +11,7 @@ fn solve(file_name: &str, p1: bool) -> String {
             a if a[..4] == *"move" => {
                 let nums: Vec<usize> = a.split(' ').flat_map(|f| f.parse::<usize>()).collect();
                 if p1 {
-                    for _ in (0..nums[0]) {
+                    for _ in 0..nums[0] {
                         if let Some(val) = stacks[nums[1] - 1].pop() {
                             stacks[nums[2] - 1].push(val)
                         }

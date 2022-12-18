@@ -1,4 +1,4 @@
-use std::{os::unix::prelude::FileExt, str::Lines};
+
 
 use itertools::FoldWhile::{Continue, Done};
 use itertools::Itertools;
@@ -49,12 +49,12 @@ fn solve_p1(file_name: &str) -> usize {
         .for_each(|(y, x)| {
             input[x][y].dirs[2] = input[x + 1][y].value.max(input[x + 1][y].dirs[2]);
             input[x][y].dirs[3] = input[x][y + 1].value.max(input[x][y + 1].dirs[3]);
-            if (input[x][y]
+            if input[x][y]
                 .dirs
                 .iter()
                 .filter(|a| **a < input[x][y].value)
                 .count()
-                > 0)
+                > 0
             {
                 visible += 1;
             }
@@ -64,7 +64,7 @@ fn solve_p1(file_name: &str) -> usize {
 
 fn solve_p2(file_name: &str) -> usize {
     let mut top_scene = 0;
-    let mut input = get_input(file_name);
+    let input = get_input(file_name);
     let xlen = input.len();
     let ylen = input[0].len();
 
@@ -72,7 +72,7 @@ fn solve_p2(file_name: &str) -> usize {
     (1..ylen - 1)
         .cartesian_product(1..xlen - 1)
         .for_each(|(x, y)| {
-            let mut res = (0..x)
+            let res = (0..x)
                 .rev()
                 .fold_while(0, |acc, xx| {
                     if input[xx][y].value < input[x][y].value {

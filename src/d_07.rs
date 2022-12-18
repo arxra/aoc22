@@ -1,6 +1,6 @@
 use std::str::Lines;
 
-use itertools::Itertools;
+
 
 #[derive(Debug)]
 struct Path {
@@ -53,9 +53,9 @@ fn crawl(it: &mut Lines, sizes: &mut Vec<usize>) -> Path {
                         sizes.push(path.tot_size.unwrap());
                         return path
                     },
-                    a => path.folders.push(crawl(it,sizes)),
+                    _a => path.folders.push(crawl(it,sizes)),
                 },
-                a => {
+                _a => {
                     unreachable!()
                 }
             }
@@ -108,8 +108,8 @@ mod tests {
     }
     #[test]
     fn p2_exp() {
-        let expected = 24933642;
-        let result = solve_p2("small/07.txt");
+        let _expected = 24933642;
+        let _result = solve_p2("small/07.txt");
     }
     #[test]
     fn p1() {
