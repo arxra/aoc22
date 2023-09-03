@@ -71,11 +71,7 @@ impl Packet {
 
 impl PartialOrd for Packet {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        match self.other_smaller(other) {
-            None => Some(Ordering::Equal),
-            Some(true) => Some(Ordering::Less),
-            Some(false) => Some(Ordering::Greater),
-        }
+        Some(self.cmp(other))
     }
 }
 impl Ord for Packet {
